@@ -13,7 +13,7 @@ export type HomeStackParamList = {
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
-function HomeScreen() {
+export default function HomeScreen() {
   return (
     <Stack.Navigator
       initialRouteName="ProductsList"
@@ -25,5 +25,3 @@ function HomeScreen() {
     </Stack.Navigator>
   );
 }
-
-export default HomeScreen;

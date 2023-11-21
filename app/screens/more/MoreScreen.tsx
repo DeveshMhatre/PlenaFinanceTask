@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
 
-function MoreScreen() {
+export default function MoreScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>More Screen</Text>
@@ -25,5 +25,3 @@ const styles = StyleSheet.create({
     color: Colors.black.default,
   },
 });
-
-export default MoreScreen;

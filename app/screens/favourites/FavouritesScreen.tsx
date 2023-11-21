@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
 
-function FavouritesScreen() {
+export default function FavouritesScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Favourites Screen</Text>
@@ -25,5 +25,3 @@ const styles = StyleSheet.create({
     color: Colors.black.default,
   },
 });
-
-export default FavouritesScreen;

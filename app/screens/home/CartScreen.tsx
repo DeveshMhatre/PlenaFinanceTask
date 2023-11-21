@@ -1,22 +1,23 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
 
 import { HomeStackParamList } from './HomeScreen';
+import Button from '../../components/Button';
 
 type CartScreenProps = NativeStackScreenProps<HomeStackParamList, 'Cart'>;
 
-function CartScreen({ navigation }: CartScreenProps) {
+export default function CartScreen({ navigation }: CartScreenProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Cart Screen</Text>
       <Button
-        title="Go to Products"
-        color={Colors.blue.default}
-        onPress={() => navigation.navigate('ProductsList')}
+        type="Primary"
+        label="Go to Products"
+        handleOnPress={() => navigation.navigate('ProductsList')}
       />
     </View>
   );
@@ -24,15 +25,14 @@ function CartScreen({ navigation }: CartScreenProps) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 20,
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
   },
   heading: {
     fontFamily: Fonts.ManropeBold,
     fontSize: 48,
+    textAlign: 'center',
     color: Colors.black.default,
   },
 });
-
-export default CartScreen;

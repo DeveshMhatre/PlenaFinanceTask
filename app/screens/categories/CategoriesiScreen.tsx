@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
 
-function CategoriesScreen() {
+export default function CategoriesScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Categories Screen</Text>
@@ -25,5 +25,3 @@ const styles = StyleSheet.create({
     color: Colors.black.default,
   },
 });
-
-export default CategoriesScreen;
