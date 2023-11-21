@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native';
 import React, { FC } from 'react';
+import { StyleSheet } from 'react-native';
 import Animated, {
   SharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+
 import Colors from '../../helpers/Colors';
 
 type CircleProps = {

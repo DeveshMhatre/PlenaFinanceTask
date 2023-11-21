@@ -1,18 +1,20 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
 import React, { FC, useEffect } from 'react';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { getPathXCenterByIndex } from '../../helpers/Path';
-import usePath from '../../hooks/usePath';
-import { SCREEN_WIDTH } from '../../helpers/Screen';
+
 import Fonts from '../../helpers/Fonts';
 import HomeIcon from '../Svg/HomeIcon';
 import HeartIcon from '../Svg/HeartIcon';
 import CategoryIcon from '../Svg/CategoryIcon';
 import MoreIcon from '../Svg/MoreIcon';
+
+import usePath from '../../hooks/usePath';
+import { getPathXCenterByIndex } from '../../helpers/Path';
+import { SCREEN_WIDTH } from '../../helpers/Screen';
 
 export type TabProps = {
   label: string;
@@ -59,19 +61,8 @@ const TabItem: FC<TabProps> = ({
       ],
     };
   });
-
-  const iconColor = useSharedValue(
-    activeIndex - 1 === index ? '#E0B420' : '#3E4545'
-  );
-
-  //Adjust Icon color for this first render
   useEffect(() => {
     animatedActiveIndex.value = activeIndex;
-    if (activeIndex - 1 === index) {
-      iconColor.value = withTiming('#E0B420');
-    } else {
-      iconColor.value = withTiming('#3E4545');
-    }
   }, [activeIndex]);
 
   return (
@@ -79,7 +70,6 @@ const TabItem: FC<TabProps> = ({
       <Animated.View style={[tabStyle]}>
         <Pressable
           testID={`tab${label}`}
-          //Increasing touchable Area
           hitSlop={{ top: 30, bottom: 50, left: 50, right: 50 }}
           onPress={onTabPress}
         >
@@ -91,14 +81,13 @@ const TabItem: FC<TabProps> = ({
           {icon === 'more' && <MoreIcon isActive={activeIndex === 4} />}
         </Pressable>
       </Animated.View>
+
       <Animated.View style={[labelContainerStyle, styles.labelContainer]}>
         <Text style={styles.label}>{label}</Text>
       </Animated.View>
     </>
   );
 };
-
-export default TabItem;
 
 const styles = StyleSheet.create({
   labelContainer: {
@@ -112,3 +101,5 @@ const styles = StyleSheet.create({
     color: '#8891A5',
   },
 });
+
+export default TabItem;

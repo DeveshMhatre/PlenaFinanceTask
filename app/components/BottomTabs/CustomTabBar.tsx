@@ -10,13 +10,15 @@ import Animated, {
 import { interpolatePath } from 'react-native-redash';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-import { SCREEN_WIDTH } from '../../helpers/Screen';
-import usePath from '../../hooks/usePath';
-import { getPathXCenter } from '../../helpers/Path';
 import TabItem from './TabItem';
 import AnimatedCircle from './AnimatedCircle';
 
+import usePath from '../../hooks/usePath';
+import { SCREEN_WIDTH } from '../../helpers/Screen';
+import { getPathXCenter } from '../../helpers/Path';
+
 const AnimatedPath = Animated.createAnimatedComponent(Path);
+
 export const CustomBottomTab: FC<BottomTabBarProps> = ({
   state,
   descriptors,
@@ -28,6 +30,7 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
   const handleMoveCircle = (currentPath: string) => {
     circleXCoordinate.value = getPathXCenter(currentPath);
   };
+
   const selectIcon = (routeName: string) => {
     switch (routeName) {
       case 'Home':
@@ -42,6 +45,7 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
         return 'Home';
     }
   };
+
   const animatedProps = useAnimatedProps(() => {
     const currentPath = interpolatePath(
       progress.value,
@@ -91,7 +95,7 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
     </View>
   );
 };
-export default CustomBottomTab;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,3 +111,5 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
+export default CustomBottomTab;
