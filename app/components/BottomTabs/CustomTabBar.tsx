@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import Animated, {
@@ -34,8 +34,8 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
         return 'home';
       case 'Categories':
         return 'categories';
-      case 'Favourites':
-        return 'favourites';
+      case 'Favourite':
+        return 'heart';
       case 'More':
         return 'more';
       default:
@@ -61,8 +61,8 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
 
   return (
     <View style={styles.tabBarContainer}>
-      <Svg width={SCREEN_WIDTH} height={tHeight} style={styles.shadowMd}>
-        <AnimatedPath fill={'white'} animatedProps={animatedProps} />
+      <Svg width={SCREEN_WIDTH} height={tHeight}>
+        <AnimatedPath fill={'#F8F7FB'} animatedProps={animatedProps} />
       </Svg>
       <AnimatedCircle circleX={circleXCoordinate} />
       <View
@@ -105,12 +105,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     width: '100%',
-  },
-  shadowMd: {
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: { width: 0, height: 3 },
   },
 });

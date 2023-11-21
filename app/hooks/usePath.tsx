@@ -10,8 +10,8 @@ type GenerateTabShapePath = (
 ) => string;
 
 const NUM_TABS = 4;
-const SCALE = 0.7;
-const TAB_BAR_HEIGHT = 64;
+const SCALE = 1;
+const TAB_BAR_HEIGHT = 89;
 
 const generateTabShapePath: GenerateTabShapePath = (
   position,
@@ -25,8 +25,8 @@ const generateTabShapePath: GenerateTabShapePath = (
     [tabX - 100 * SCALE, 0],
     [tabX - (65 + 35) * SCALE, 0],
     [tabX - (50 - 10) * SCALE, -6 * SCALE],
-    [tabX - (50 - 15) * SCALE, (adjustedHeight - 14) * SCALE],
-    [tabX + (50 - 15) * SCALE, (adjustedHeight - 14) * SCALE],
+    [tabX - (50 - 15) * SCALE, (adjustedHeight - 39) * SCALE],
+    [tabX + (50 - 15) * SCALE, (adjustedHeight - 39) * SCALE],
     [tabX + (50 - 10) * SCALE, -6 * SCALE],
     [tabX + (65 + 35) * SCALE, 0],
     [tabX + 100 * SCALE, 0],

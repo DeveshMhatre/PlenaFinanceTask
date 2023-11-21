@@ -1,15 +1,18 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
 import React, { FC, useEffect } from 'react';
 import Animated, {
-  useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import Feather from 'react-native-vector-icons/Feather';
 import { getPathXCenterByIndex } from '../../helpers/Path';
 import usePath from '../../hooks/usePath';
 import { SCREEN_WIDTH } from '../../helpers/Screen';
+import Fonts from '../../helpers/Fonts';
+import HomeIcon from '../Svg/HomeIcon';
+import HeartIcon from '../Svg/HeartIcon';
+import CategoryIcon from '../Svg/CategoryIcon';
+import MoreIcon from '../Svg/MoreIcon';
 
 export type TabProps = {
   label: string;
@@ -18,13 +21,14 @@ export type TabProps = {
   activeIndex: number;
   onTabPress: () => void;
 };
-const ICON_SIZE = 25;
+
+const ICON_SIZE = 24;
 const LABEL_WIDTH = SCREEN_WIDTH / 4;
-const AnimatedIcon = Animated.createAnimatedComponent(Feather);
+
 const TabItem: FC<TabProps> = ({
   label,
-  icon,
   index,
+  icon,
   activeIndex,
   onTabPress,
 }) => {
@@ -34,7 +38,7 @@ const TabItem: FC<TabProps> = ({
   const labelPosition = getPathXCenterByIndex(curvedPaths, index);
 
   const tabStyle = useAnimatedStyle(() => {
-    const translateY = animatedActiveIndex.value - 1 === index ? -35 : 20;
+    const translateY = animatedActiveIndex.value - 1 === index ? -7 : 20;
     const iconPositionX = iconPosition - index * ICON_SIZE;
     return {
       width: ICON_SIZE,
@@ -45,8 +49,9 @@ const TabItem: FC<TabProps> = ({
       ],
     };
   });
+
   const labelContainerStyle = useAnimatedStyle(() => {
-    const translateY = animatedActiveIndex.value - 1 === index ? 36 : 100;
+    const translateY = animatedActiveIndex.value - 1 !== index ? 46 : 100;
     return {
       transform: [
         { translateY: withTiming(translateY) },
@@ -54,37 +59,36 @@ const TabItem: FC<TabProps> = ({
       ],
     };
   });
+
   const iconColor = useSharedValue(
-    activeIndex === index + 1 ? 'white' : 'rgba(128,128,128,0.8)'
+    activeIndex - 1 === index ? '#E0B420' : '#3E4545'
   );
 
   //Adjust Icon color for this first render
   useEffect(() => {
     animatedActiveIndex.value = activeIndex;
-    if (activeIndex === index + 1) {
-      iconColor.value = withTiming('white');
+    if (activeIndex - 1 === index) {
+      iconColor.value = withTiming('#E0B420');
     } else {
-      iconColor.value = withTiming('rgba(128,128,128,0.8)');
+      iconColor.value = withTiming('#3E4545');
     }
   }, [activeIndex]);
 
-  const animatedIconProps = useAnimatedProps(() => ({
-    color: iconColor.value,
-  }));
   return (
     <>
       <Animated.View style={[tabStyle]}>
         <Pressable
           testID={`tab${label}`}
           //Increasing touchable Area
-          hitSlop={{ top: 30, bottom: 30, left: 50, right: 50 }}
+          hitSlop={{ top: 30, bottom: 50, left: 50, right: 50 }}
           onPress={onTabPress}
         >
-          <AnimatedIcon
-            name={icon}
-            size={25}
-            animatedProps={animatedIconProps}
-          />
+          {icon === 'home' && <HomeIcon isActive={activeIndex === 1} />}
+          {icon === 'categories' && (
+            <CategoryIcon isActive={activeIndex === 2} />
+          )}
+          {icon === 'heart' && <HeartIcon isActive={activeIndex === 3} />}
+          {icon === 'more' && <MoreIcon isActive={activeIndex === 4} />}
         </Pressable>
       </Animated.View>
       <Animated.View style={[labelContainerStyle, styles.labelContainer]}>
@@ -103,7 +107,8 @@ const styles = StyleSheet.create({
     width: LABEL_WIDTH,
   },
   label: {
-    color: 'rgba(128,128,128,0.8)',
-    fontSize: 17,
+    fontFamily: Fonts.ManropeMedium,
+    fontSize: 12,
+    color: '#8891A5',
   },
 });

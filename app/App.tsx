@@ -12,7 +12,7 @@ import CustomTabBar from './components/BottomTabs/CustomTabBar';
 export type BottomTabParamList = {
   Home: undefined;
   Categories: undefined;
-  Favourites: undefined;
+  Favourite: undefined;
   More: undefined;
 };
 
@@ -31,7 +31,7 @@ export default function App(): JSX.Element {
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Categories" component={CategoriesScreen} />
-          <Tab.Screen name="Favourites" component={FavouritesScreen} />
+          <Tab.Screen name="Favourite" component={FavouritesScreen} />
           <Tab.Screen name="More" component={MoreScreen} />
         </Tab.Navigator>
       </NavigationContainer>

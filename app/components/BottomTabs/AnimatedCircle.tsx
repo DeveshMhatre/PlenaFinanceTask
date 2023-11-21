@@ -4,11 +4,12 @@ import Animated, {
   SharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import Colors from '../../helpers/Colors';
 
 type CircleProps = {
   circleX: SharedValue<number>;
 };
-const circleContainerSize = 50;
+const circleContainerSize = 66;
 
 const AnimatedCircle: FC<CircleProps> = ({ circleX }) => {
   const circleContainerStyle = useAnimatedStyle(() => {
@@ -25,11 +26,11 @@ export default AnimatedCircle;
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: -circleContainerSize / 1.1,
+    top: -circleContainerSize / 2.4,
     width: circleContainerSize,
     borderRadius: circleContainerSize,
     height: circleContainerSize,
-    backgroundColor: '#D94934',
+    backgroundColor: Colors.black.default,
     justifyContent: 'center',
     alignItems: 'center',
   },
