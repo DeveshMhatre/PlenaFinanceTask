@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: Colors.blue.default,
     textAlign: 'center',
+    includeFontPadding: false,
     color: Colors.black.one,
   },
   outlineBtn: {
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.blue.default,
     borderRadius: 20,
     textAlign: 'center',
+    includeFontPadding: false,
     color: Colors.blue.default,
   },
 });

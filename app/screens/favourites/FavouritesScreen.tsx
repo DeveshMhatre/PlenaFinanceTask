@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.ManropeBold,
     fontSize: 48,
     textAlign: 'center',
+    includeFontPadding: false,
     color: Colors.black.default,
   },
 });

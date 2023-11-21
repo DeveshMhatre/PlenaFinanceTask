@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     width: LABEL_WIDTH,
   },
   label: {
+    includeFontPadding: false,
     fontFamily: Fonts.ManropeMedium,
     fontSize: 12,
     color: '#8891A5',
