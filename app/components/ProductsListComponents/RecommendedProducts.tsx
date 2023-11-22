@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: '100%',
     height: 100,
-    objectFit: 'cover',
+    objectFit: 'fill',
   },
   productPrice: {
     fontFamily: Fonts.ManropeSemiBold,
