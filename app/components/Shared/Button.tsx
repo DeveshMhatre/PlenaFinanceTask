@@ -1,8 +1,8 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
-import Colors from '../helpers/Colors';
-import Fonts from '../helpers/Fonts';
+import Colors from '../../helpers/Colors';
+import Fonts from '../../helpers/Fonts';
 
 type ButtonProps = {
   type: 'Primary' | 'Outline';

@@ -6,7 +6,7 @@ import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
 
 import { HomeStackParamList } from './HomeScreen';
-import Button from '../../components/Button';
+import Button from '../../components/Shared/Button';
 
 type ProductScreenProps = NativeStackScreenProps<HomeStackParamList, 'Product'>;
 
