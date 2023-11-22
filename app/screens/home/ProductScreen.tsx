@@ -1,28 +1,17 @@
-import React, { useRef } from 'react';
-import {
-  Animated,
-  FlatList,
-  Image,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
-import { SCREEN_WIDTH } from '../../helpers/Screen';
 
 import { HomeStackParamList } from './HomeScreen';
 import CartButton from '../../components/Shared/CartButton';
 import GoBackButton from '../../components/Shared/GoBackButton';
 import StarIcon from '../../components/Svg/StarIcon';
-import HeartButton from '../../components/ProductComponents/HeartButton';
-import Pagination from '../../components/ProductComponents/Pagination';
+import ProductImageSlider from '../../components/ProductComponents/ProductImageSlider';
+import Button from '../../components/Shared/Button';
 
 type ProductScreenProps = NativeStackScreenProps<HomeStackParamList, 'Product'>;
 
@@ -31,29 +20,6 @@ export default function ProductScreen({
   navigation,
 }: ProductScreenProps) {
   const { product } = route.params;
-
-  const scrollX = useRef(new Animated.Value(0)).current;
-
-  const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    Animated.event(
-      [
-        {
-          nativeEvent: {
-            contentOffset: {
-              x: scrollX,
-            },
-          },
-        },
-      ],
-      {
-        useNativeDriver: false,
-      }
-    )(event);
-  };
-
-  const viewabilityConfig = useRef({
-    itemVisiblePercentThreshold: 50,
-  }).current;
 
   return (
     <View style={styles.container}>
@@ -83,26 +49,44 @@ export default function ProductScreen({
           <Text style={styles.reviews}>110 Reviews</Text>
         </View>
 
-        <View>
-          <FlatList
-            data={product.images}
-            renderItem={({ item }) => {
-              return (
-                <Image source={{ uri: item }} style={styles.productImage} />
-              );
-            }}
-            style={styles.imageCarousel}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            snapToInterval={SCREEN_WIDTH}
-            disableIntervalMomentum={true}
-            bounces={false}
-            onScroll={handleOnScroll}
-            viewabilityConfig={viewabilityConfig}
-          />
+        <ProductImageSlider product={product} />
 
-          <HeartButton />
-          <Pagination data={product.images} scrollX={scrollX} />
+        <View style={styles.priceContainer}>
+          <Text style={styles.price}>${product.price}</Text>
+
+          {product?.discountPercentage && (
+            <View style={styles.discountContainer}>
+              <Text style={styles.discount}>
+                $
+                {((product.price * product.discountPercentage) / 100).toFixed(
+                  2
+                )}{' '}
+                off
+              </Text>
+            </View>
+          )}
+        </View>
+
+        <View style={styles.btnContainer}>
+          <View style={{ flex: 1, marginRight: 10 }}>
+            <Button
+              type="Outline"
+              handleOnPress={() => console.log('WIP')}
+              label="Add To Cart"
+            />
+          </View>
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <Button
+              type="Primary"
+              handleOnPress={() => navigation.navigate('Cart')}
+              label="Buy Now"
+            />
+          </View>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerHeading}>Details</Text>
+          <Text style={styles.footerText}>{product.description}</Text>
         </View>
       </ScrollView>
     </View>
@@ -141,14 +125,51 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     color: '#A1A1AB',
   },
-  imageCarousel: {
-    marginTop: 15,
-    height: 250,
-    flexGrow: 0,
+  priceContainer: {
+    marginHorizontal: 20,
+    marginTop: 26,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  productImage: {
-    width: SCREEN_WIDTH,
-    height: 250,
-    objectFit: 'fill',
+  price: {
+    fontFamily: Fonts.ManropeBold,
+    fontSize: 16,
+    color: Colors.blue.default,
+  },
+  discountContainer: {
+    marginLeft: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 25,
+    backgroundColor: Colors.blue.default,
+  },
+  discount: {
+    fontFamily: Fonts.ManropeRegular,
+    fontSize: 12,
+    includeFontPadding: false,
+    textTransform: 'uppercase',
+    color: Colors.black.one,
+  },
+  btnContainer: {
+    marginHorizontal: 20,
+    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  footer: {
+    marginHorizontal: 20,
+    marginTop: 30,
+  },
+  footerHeading: {
+    fontFamily: Fonts.ManropeRegular,
+    fontSize: 16,
+    color: '#1E222B',
+  },
+  footerText: {
+    marginTop: 8,
+    fontFamily: Fonts.ManropeRegular,
+    fontSize: 16,
+    color: '#8891A5',
   },
 });
