@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
+  Animated,
   FlatList,
   Image,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,6 +22,7 @@ import CartButton from '../../components/Shared/CartButton';
 import GoBackButton from '../../components/Shared/GoBackButton';
 import StarIcon from '../../components/Svg/StarIcon';
 import HeartButton from '../../components/ProductComponents/HeartButton';
+import Pagination from '../../components/ProductComponents/Pagination';
 
 type ProductScreenProps = NativeStackScreenProps<HomeStackParamList, 'Product'>;
 
@@ -27,6 +31,29 @@ export default function ProductScreen({
   navigation,
 }: ProductScreenProps) {
   const { product } = route.params;
+
+  const scrollX = useRef(new Animated.Value(0)).current;
+
+  const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    Animated.event(
+      [
+        {
+          nativeEvent: {
+            contentOffset: {
+              x: scrollX,
+            },
+          },
+        },
+      ],
+      {
+        useNativeDriver: false,
+      }
+    )(event);
+  };
+
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50,
+  }).current;
 
   return (
     <View style={styles.container}>
@@ -70,9 +97,12 @@ export default function ProductScreen({
             snapToInterval={SCREEN_WIDTH}
             disableIntervalMomentum={true}
             bounces={false}
+            onScroll={handleOnScroll}
+            viewabilityConfig={viewabilityConfig}
           />
 
           <HeartButton />
+          <Pagination data={product.images} scrollX={scrollX} />
         </View>
       </ScrollView>
     </View>
