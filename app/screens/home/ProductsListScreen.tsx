@@ -10,7 +10,7 @@ import BannerCarousel from '../../components/ProductsListComponents/BannerCarous
 import ProductsListHeader from '../../components/ProductsListComponents/ProductsListHeader';
 import RecommendedProducts from '../../components/ProductsListComponents/RecommendedProducts';
 
-type ProductsListScreenProps = NativeStackScreenProps<
+export type ProductsListScreenProps = NativeStackScreenProps<
   HomeStackParamList,
   'ProductsList'
 >;
@@ -63,10 +63,8 @@ export default function ProductsListScreen({
         }}
       >
         <BannerCarousel />
-
         <Text style={styles.recommendText}>Recommended</Text>
-
-        <RecommendedProducts products={products} />
+        <RecommendedProducts products={products} navigation={navigation} />
       </ScrollView>
     </View>
   );

@@ -1,39 +1,43 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import Colors from '../../helpers/Colors';
-import Fonts from '../../helpers/Fonts';
-
 import { HomeStackParamList } from './HomeScreen';
-import Button from '../../components/Shared/Button';
+import CartButton from '../../components/Shared/CartButton';
+import GoBackButton from '../../components/Shared/GoBackButton';
 
 type ProductScreenProps = NativeStackScreenProps<HomeStackParamList, 'Product'>;
 
-export default function ProductScreen({ navigation }: ProductScreenProps) {
+export default function ProductScreen({
+  route,
+  navigation,
+}: ProductScreenProps) {
+  const { product } = route.params;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Product Screen</Text>
-      <Button
-        type="Primary"
-        label="Go to Cart"
-        handleOnPress={() => navigation.navigate('Cart')}
-      />
+      <View style={styles.header}>
+        <GoBackButton handleOnPress={() => navigation.goBack()} />
+        <CartButton
+          openCart={() => navigation.navigate('Cart')}
+          inverse={true}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    paddingTop: 40,
     height: '100%',
-    justifyContent: 'center',
+    backgroundColor: '#FFF',
   },
-  heading: {
-    fontFamily: Fonts.ManropeBold,
-    fontSize: 48,
-    textAlign: 'center',
-    includeFontPadding: false,
-    color: Colors.black.default,
+  header: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

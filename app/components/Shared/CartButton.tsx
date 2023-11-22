@@ -5,11 +5,24 @@ import Fonts from '../../helpers/Fonts';
 
 import CartIcon from '../Svg/CartIcon';
 
-export default function CartButton({ openCart }: { openCart: () => void }) {
+export default function CartButton({
+  openCart,
+  inverse = false,
+}: {
+  openCart: () => void;
+  inverse?: boolean;
+}) {
   return (
     <Pressable onPress={openCart} style={styles.cartBtn}>
-      <CartIcon />
-      <View style={styles.badgeContainer}>
+      <CartIcon inverse={inverse} />
+      <View
+        style={[
+          styles.badgeContainer,
+          {
+            borderColor: inverse ? '#fff' : Colors.blue.default,
+          },
+        ]}
+      >
         <Text style={styles.badgeText}>3</Text>
       </View>
     </Pressable>
@@ -30,7 +43,6 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     borderWidth: 2,
-    borderColor: Colors.blue.default,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',

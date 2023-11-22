@@ -1,56 +1,65 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
-import { Product } from '../../screens/home/ProductsListScreen';
+import {
+  Product,
+  ProductsListScreenProps,
+} from '../../screens/home/ProductsListScreen';
 
 import AddMinusButton from '../Shared/AddMinusButton';
 import HeartButton from './HeartButton';
 
 export default function RecommendedProducts({
   products,
+  navigation,
 }: {
   products: Product[];
+  navigation: ProductsListScreenProps['navigation'];
 }) {
   return (
     <View style={styles.productsList}>
       {products?.map((product, index) => (
-        <View
+        <Pressable
           key={index}
-          style={[
-            styles.product,
-            {
-              marginLeft: index % 2 === 0 ? 10 : 0,
-              marginRight: index % 2 === 0 ? 0 : 10,
-            },
-          ]}
+          onPress={() => navigation.navigate('Product', { product: product })}
         >
-          <HeartButton />
-
-          <Image
-            source={{ uri: product?.thumbnail }}
-            style={styles.productThumb}
-          />
           <View
-            style={{
-              marginTop: 30,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-            }}
+            style={[
+              styles.product,
+              {
+                marginLeft: index % 2 === 0 ? 10 : 0,
+                marginRight: index % 2 === 0 ? 0 : 10,
+              },
+            ]}
           >
-            <View>
-              <Text style={styles.productPrice}>${product.price}</Text>
-              <Text style={styles.productTitle}>{product.title}</Text>
-            </View>
+            <HeartButton />
 
-            <AddMinusButton
-              type="Primary"
-              label="Plus"
-              handleOnPress={() => console.log(product?.price)}
+            <Image
+              source={{ uri: product?.thumbnail }}
+              style={styles.productThumb}
             />
+            <View
+              style={{
+                marginTop: 30,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+              }}
+            >
+              <View>
+                <Text style={styles.productPrice}>${product.price}</Text>
+                <Text style={styles.productTitle}>{product.title}</Text>
+              </View>
+
+              <AddMinusButton
+                type="Primary"
+                label="Plus"
+                handleOnPress={() => console.log(product?.price)}
+              />
+            </View>
           </View>
-        </View>
+        </Pressable>
       ))}
     </View>
   );

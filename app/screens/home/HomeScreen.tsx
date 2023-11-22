@@ -2,12 +2,12 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ProductScreen from './ProductScreen';
-import ProductsListScreen from './ProductsListScreen';
+import ProductsListScreen, { Product } from './ProductsListScreen';
 import CartScreen from './CartScreen';
 
 export type HomeStackParamList = {
   ProductsList: undefined;
-  Product: undefined;
+  Product: { product: Product };
   Cart: undefined;
 };
 
