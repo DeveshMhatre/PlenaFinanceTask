@@ -58,8 +58,8 @@ export default function ProductsListScreen({
       <ProductsListHeader handleOpenCart={() => navigation.navigate('Cart')} />
 
       <ScrollView
-        style={{
-          marginBottom: 100,
+        contentContainerStyle={{
+          paddingBottom: 100,
         }}
       >
         <BannerCarousel />

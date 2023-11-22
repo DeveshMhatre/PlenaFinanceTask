@@ -34,7 +34,9 @@ export default function ProductScreen({
       <ScrollView
         style={{
           marginTop: 20,
-          marginBottom: 100,
+        }}
+        contentContainerStyle={{
+          paddingBottom: 150,
         }}
       >
         <Text style={styles.productTitle}>{product.title}</Text>
