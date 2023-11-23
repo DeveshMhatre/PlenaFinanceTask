@@ -90,7 +90,9 @@ export const CustomBottomTab: FC<
               icon={selectIcon(route.name)}
               activeIndex={state.index + 1}
               index={index}
-              onTabPress={() => handleTabPress(index + 1, route.name)}
+              onTabPress={() =>
+                showTabBar && handleTabPress(index + 1, route.name)
+              }
             />
           );
         })}
