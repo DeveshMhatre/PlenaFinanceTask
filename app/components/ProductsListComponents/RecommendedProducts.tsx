@@ -1,4 +1,5 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
@@ -10,6 +11,9 @@ import {
 import AddMinusButton from '../Shared/AddMinusButton';
 import HeartButton from './HeartButton';
 
+import { RootState } from '../../state/store';
+import { CartItem, addItem, removeItem } from '../../state/cart/cartSlice';
+
 export default function RecommendedProducts({
   products,
   navigation,
@@ -17,6 +21,17 @@ export default function RecommendedProducts({
   products: Product[];
   navigation: ProductsListScreenProps['navigation'];
 }) {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart.value);
+
+  const handleOnPress = (product: CartItem) => {
+    if (cartItems.some((item) => item.id === product.id)) {
+      dispatch(removeItem(product.id));
+    } else {
+      dispatch(addItem(product));
+    }
+  };
+
   return (
     <View style={styles.productsList}>
       {products?.map((product, index) => (
@@ -54,8 +69,21 @@ export default function RecommendedProducts({
 
               <AddMinusButton
                 type="Primary"
-                label="Plus"
-                handleOnPress={() => console.log(product?.price)}
+                label={
+                  cartItems.some((item) => item.id === product.id)
+                    ? 'Subtract'
+                    : 'Plus'
+                }
+                handleOnPress={() =>
+                  handleOnPress({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    stock: product.stock,
+                    quantity: 1,
+                    thumbnail: product.thumbnail,
+                  })
+                }
               />
             </View>
           </View>

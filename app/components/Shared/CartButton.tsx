@@ -1,9 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
 
 import CartIcon from '../Svg/CartIcon';
+
+import { RootState } from '../../state/store';
 
 export default function CartButton({
   openCart,
@@ -12,19 +15,26 @@ export default function CartButton({
   openCart: () => void;
   inverse?: boolean;
 }) {
+  const cartItemsCount = useSelector(
+    (state: RootState) => state.cart.value.length
+  );
   return (
     <Pressable onPress={openCart} style={styles.cartBtn}>
       <CartIcon inverse={inverse} />
-      <View
-        style={[
-          styles.badgeContainer,
-          {
-            borderColor: inverse ? '#fff' : Colors.blue.default,
-          },
-        ]}
-      >
-        <Text style={styles.badgeText}>3</Text>
-      </View>
+      {cartItemsCount > 0 && (
+        <View
+          style={[
+            styles.badgeContainer,
+            {
+              borderColor: inverse ? '#fff' : Colors.blue.default,
+            },
+          ]}
+        >
+          <Text style={styles.badgeText}>
+            {cartItemsCount > 9 ? '9+' : cartItemsCount}
+          </Text>
+        </View>
+      )}
     </Pressable>
   );
 }

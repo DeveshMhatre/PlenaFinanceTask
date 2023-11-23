@@ -19,7 +19,7 @@ export default function AddMinusButton({
 }: AddMinusButtonProps) {
   return (
     <Pressable
-      onPress={handleOnPress}
+      onPress={() => handleOnPress()}
       style={type === 'Primary' ? styles.primaryBtn : styles.outlineBtn}
     >
       {label === 'Plus' ? <PlusIcon type={type} /> : <MinusIcon type={type} />}

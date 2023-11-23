@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Colors from '../../helpers/Colors';
 import Fonts from '../../helpers/Fonts';
@@ -13,6 +14,9 @@ import StarIcon from '../../components/Svg/StarIcon';
 import ProductImageSlider from '../../components/ProductComponents/ProductImageSlider';
 import Button from '../../components/Shared/Button';
 
+import { RootState } from '../../state/store';
+import { CartItem, addItem, removeItem } from '../../state/cart/cartSlice';
+
 type ProductScreenProps = NativeStackScreenProps<HomeStackParamList, 'Product'>;
 
 export default function ProductScreen({
@@ -20,6 +24,17 @@ export default function ProductScreen({
   navigation,
 }: ProductScreenProps) {
   const { product } = route.params;
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart.value);
+
+  const handleOnPress = (product: CartItem) => {
+    if (cartItems.some((item) => item.id === product.id)) {
+      dispatch(removeItem(product.id));
+    } else {
+      dispatch(addItem(product));
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -73,8 +88,21 @@ export default function ProductScreen({
           <View style={{ flex: 1, marginRight: 10 }}>
             <Button
               type="Outline"
-              handleOnPress={() => console.log('WIP')}
-              label="Add To Cart"
+              label={
+                cartItems.some((item) => item.id === product.id)
+                  ? 'Remove From Cart'
+                  : 'Add To Cart'
+              }
+              handleOnPress={() =>
+                handleOnPress({
+                  id: product.id,
+                  title: product.title,
+                  price: product.price,
+                  stock: product.stock,
+                  quantity: 1,
+                  thumbnail: product.thumbnail,
+                })
+              }
             />
           </View>
           <View style={{ flex: 1, marginLeft: 10 }}>
