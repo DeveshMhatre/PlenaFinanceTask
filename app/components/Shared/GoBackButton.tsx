@@ -19,9 +19,9 @@ export default function GoBackButton({ handleOnPress }: GoBackButtonProps) {
 
 const styles = StyleSheet.create({
   outlineBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     transform: [{ rotateZ: '90deg' }],

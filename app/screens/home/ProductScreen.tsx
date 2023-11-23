@@ -36,6 +36,15 @@ export default function ProductScreen({
     }
   };
 
+  const handleBuyNow = (product: CartItem) => {
+    if (cartItems.some((item) => item.id === product.id)) {
+      navigation.navigate('Cart');
+    } else {
+      dispatch(addItem(product));
+      navigation.navigate('Cart');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -108,7 +117,16 @@ export default function ProductScreen({
           <View style={{ flex: 1, marginLeft: 10 }}>
             <Button
               type="Primary"
-              handleOnPress={() => navigation.navigate('Cart')}
+              handleOnPress={() =>
+                handleBuyNow({
+                  id: product.id,
+                  title: product.title,
+                  price: product.price,
+                  stock: product.stock,
+                  quantity: 1,
+                  thumbnail: product.thumbnail,
+                })
+              }
               label="Buy Now"
             />
           </View>

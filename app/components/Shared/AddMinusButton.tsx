@@ -10,19 +10,26 @@ type AddMinusButtonProps = {
   type: 'Primary' | 'Outline';
   label: 'Plus' | 'Subtract';
   handleOnPress: () => void;
+  disabled?: boolean;
 };
 
 export default function AddMinusButton({
   type,
   label,
   handleOnPress,
+  disabled = false,
 }: AddMinusButtonProps) {
   return (
     <Pressable
+      disabled={disabled}
       onPress={() => handleOnPress()}
       style={type === 'Primary' ? styles.primaryBtn : styles.outlineBtn}
     >
-      {label === 'Plus' ? <PlusIcon type={type} /> : <MinusIcon type={type} />}
+      {label === 'Plus' ? (
+        !disabled && <PlusIcon type={type} />
+      ) : (
+        <MinusIcon type={type} />
+      )}
     </Pressable>
   );
 }
