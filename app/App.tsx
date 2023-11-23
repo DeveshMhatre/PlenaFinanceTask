@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from './screens/home/HomeScreen';
@@ -19,6 +22,8 @@ export type BottomTabParamList = {
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function App(): JSX.Element {
+  const [showTabBar, setShowTabBar] = useState<boolean>(true);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -27,9 +32,13 @@ export default function App(): JSX.Element {
           screenOptions={{
             headerShown: false,
           }}
-          tabBar={(props) => <CustomTabBar {...props} />}
+          tabBar={(props) => (
+            <CustomTabBar showTabBar={showTabBar} {...props} />
+          )}
         >
-          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Home">
+            {(props) => <HomeScreen {...props} setShowTabBar={setShowTabBar} />}
+          </Tab.Screen>
           <Tab.Screen name="Categories" component={CategoriesScreen} />
           <Tab.Screen name="Favourite" component={FavouritesScreen} />
           <Tab.Screen name="More" component={MoreScreen} />

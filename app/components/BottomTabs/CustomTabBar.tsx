@@ -19,11 +19,9 @@ import { getPathXCenter } from '../../helpers/Path';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-export const CustomBottomTab: FC<BottomTabBarProps> = ({
-  state,
-  descriptors,
-  navigation,
-}) => {
+export const CustomBottomTab: FC<
+  { showTabBar: boolean } & BottomTabBarProps
+> = ({ showTabBar, state, descriptors, navigation }) => {
   const { containerPath, curvedPaths, tHeight } = usePath();
   const circleXCoordinate = useSharedValue(0);
   const progress = useSharedValue(1);
@@ -64,7 +62,12 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
   };
 
   return (
-    <View style={styles.tabBarContainer}>
+    <View
+      style={[
+        styles.tabBarContainer,
+        { display: showTabBar ? 'flex' : 'none' },
+      ]}
+    >
       <Svg width={SCREEN_WIDTH} height={tHeight}>
         <AnimatedPath fill={'#F8F7FB'} animatedProps={animatedProps} />
       </Svg>
