@@ -55,7 +55,7 @@ export default function ProductImageSlider({ product }: { product: Product }) {
         viewabilityConfig={viewabilityConfig}
       />
 
-      <HeartButton />
+      <HeartButton productId={product.id} />
       <Pagination data={product.images} scrollX={scrollX} />
     </View>
   );

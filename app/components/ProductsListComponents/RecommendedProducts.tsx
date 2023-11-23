@@ -33,7 +33,7 @@ export default function RecommendedProducts({
               },
             ]}
           >
-            <HeartButton />
+            <HeartButton productId={product?.id} />
 
             <Image
               source={{ uri: product?.thumbnail }}
