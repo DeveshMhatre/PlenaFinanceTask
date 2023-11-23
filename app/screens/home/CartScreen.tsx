@@ -46,7 +46,7 @@ export default function CartScreen({ navigation }: CartScreenProps) {
           }}
         >
           {cartItems.map((cartItem) => (
-            <CartItemComponent cartItem={cartItem} />
+            <CartItemComponent key={cartItem.id} cartItem={cartItem} />
           ))}
 
           <Pressable

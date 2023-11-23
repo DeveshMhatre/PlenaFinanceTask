@@ -1,5 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import Colors from '../../helpers/Colors';
@@ -34,19 +40,23 @@ export default function ProductsListScreen({
 }: ProductsListScreenProps) {
   const firstRender = useRef(true);
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const response = await fetch('https://dummyjson.com/products?limit=10');
       const result = await response.json();
 
       setProducts(result.products);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (firstRender.current) {
       fetchProducts();
       firstRender.current = false;
@@ -57,15 +67,28 @@ export default function ProductsListScreen({
     <View style={styles.container}>
       <ProductsListHeader handleOpenCart={() => navigation.navigate('Cart')} />
 
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: 100,
-        }}
-      >
-        <BannerCarousel />
-        <Text style={styles.recommendText}>Recommended</Text>
-        <RecommendedProducts products={products} navigation={navigation} />
-      </ScrollView>
+      {loading ? (
+        <View
+          style={{
+            paddingBottom: 70,
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" color={Colors.blue.default} />
+        </View>
+      ) : (
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: 100,
+          }}
+        >
+          <BannerCarousel />
+          <Text style={styles.recommendText}>Recommended</Text>
+          <RecommendedProducts products={products} navigation={navigation} />
+        </ScrollView>
+      )}
     </View>
   );
 }
