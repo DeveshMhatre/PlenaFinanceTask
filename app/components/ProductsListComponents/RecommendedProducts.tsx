@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   product: {
+    flex: 1,
     flexBasis: '45%',
     paddingHorizontal: 15,
     paddingVertical: 20,
