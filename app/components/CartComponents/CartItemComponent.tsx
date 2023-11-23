@@ -1,13 +1,13 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-
-import { CartItem, removeItem } from '../../state/cart/cartSlice';
+import Animated, { SlideOutLeft } from 'react-native-reanimated';
 
 import AddMinusButton from '../Shared/AddMinusButton';
 
 import Fonts from '../../helpers/Fonts';
 import Colors from '../../helpers/Colors';
 
+import { CartItem, removeItem } from '../../state/cart/cartSlice';
 import { decreaseQuantity, increaseQuantity } from '../../state/cart/cartSlice';
 
 export default function CartItemComponent({
@@ -26,7 +26,7 @@ export default function CartItemComponent({
   };
 
   return (
-    <View style={styles.cartItemContainer}>
+    <Animated.View exiting={SlideOutLeft} style={styles.cartItemContainer}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Image source={{ uri: cartItem.thumbnail }} style={styles.cartImage} />
 
@@ -50,7 +50,7 @@ export default function CartItemComponent({
           disabled={cartItem.quantity >= cartItem.stock}
         />
       </View>
-    </View>
+    </Animated.View>
   );
 }
 const styles = StyleSheet.create({
